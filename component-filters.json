@@ -21,7 +21,7 @@
   {
     "id": "cards-related",
     "components": [
-      "card"
+      "cards-related-item"
     ]
   },
   {

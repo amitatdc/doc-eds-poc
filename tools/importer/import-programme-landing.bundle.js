@@ -199,6 +199,34 @@ var CustomImportScript = (() => {
   var transformers = [
     transform
   ];
+  var SAMPLE_PAGE_PROPERTIES = {
+    "/our-work/takahe-recovery-programme/": {
+      "Page Owner": "Deidre Vercoe",
+      "Internal Department": "Takah\u0113 Recovery",
+      "Review Date": "2027-07-24",
+      Confidentiality: "Public"
+    }
+  };
+  function appendCustomMetadata(main, document, originalURL) {
+    const { pathname } = new URL(originalURL);
+    const props = SAMPLE_PAGE_PROPERTIES[pathname];
+    if (!props) return;
+    const tables = [...main.querySelectorAll("table")];
+    const metaTable = tables.reverse().find((t) => {
+      const th = t.querySelector("th");
+      return th && th.textContent.trim().toLowerCase() === "metadata";
+    });
+    if (!metaTable) return;
+    Object.entries(props).forEach(([label, value]) => {
+      const row = document.createElement("tr");
+      const keyCell = document.createElement("td");
+      keyCell.textContent = label;
+      const valCell = document.createElement("td");
+      valCell.textContent = value;
+      row.append(keyCell, valCell);
+      metaTable.append(row);
+    });
+  }
   function executeTransformers(hookName, element, payload) {
     const enhancedPayload = __spreadProps(__spreadValues({}, payload), { template: PAGE_TEMPLATE });
     transformers.forEach((transformerFn) => {
@@ -266,6 +294,7 @@ var CustomImportScript = (() => {
       const hr = document.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document);
+      appendCustomMetadata(main, document, params.originalURL);
       WebImporter.rules.transformBackgroundImages(main, document);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const path = WebImporter.FileUtils.sanitizePath(

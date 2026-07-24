@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" jcr:primaryType="cq:Page">
+  <jcr:content cq:template="/libs/core/franklin/templates/page" sling:resourceType="core/franklin/components/page/v1/page" jcr:primaryType="cq:PageContent">
+    <root jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/root/v1/root">
+      <section sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured">
+        <title sling:resourceType="core/franklin/components/title/v1/title" jcr:primaryType="nt:unstructured" title="Your Project&#x27;s Title..." titleType="h1"/>
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured" text="&lt;p&gt;Your project&#x27;s description...&lt;/p&gt;"/>
+        <title_1 sling:resourceType="core/franklin/components/title/v1/title" jcr:primaryType="nt:unstructured" title="Environments" titleType="h2"/>
+        <text_1 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured" text="&lt;ul&gt;
+                    &lt;li&gt;Preview: &lt;a href&#x3D;&quot;https://main--%7Brepo%7D--%7Bowner%7D.aem.page/&quot;&gt;https://main--{repo}--{owner}.aem.page/&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;Live: &lt;a href&#x3D;&quot;https://main--%7Brepo%7D--%7Bowner%7D.aem.live/&quot;&gt;https://main--{repo}--{owner}.aem.live/&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;"/>
+        <title_2 sling:resourceType="core/franklin/components/title/v1/title" jcr:primaryType="nt:unstructured" title="Documentation" titleType="h2"/>
+        <text_2 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured" text="&lt;p&gt;Before using the aem-boilerplate, we recommend you to go through the documentation on &lt;a href&#x3D;&quot;https://www.aem.live/docs/&quot;&gt;www.aem.live&lt;/a&gt;, more specifically:&lt;/p&gt;&lt;ol&gt;
+                    &lt;li&gt;&lt;a href&#x3D;&quot;https://www.aem.live/docs/aem-authoring&quot;&gt;AEM Authoring&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href&#x3D;&quot;https://www.aem.live/developer/ue-tutorial&quot;&gt;Universal Editor Tutorial&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href&#x3D;&quot;https://www.aem.live/developer/component-model-definitions&quot;&gt;Component Model Definitions&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href&#x3D;&quot;https://www.aem.live/developer/authoring-path-mapping&quot;&gt;Authoring Path Mapping&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ol&gt;"/>
+        <title_3 sling:resourceType="core/franklin/components/title/v1/title" jcr:primaryType="nt:unstructured" title="Prerequisites" titleType="h2"/>
+        <text_3 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured" text="&lt;ul&gt;
+                    &lt;li&gt;nodejs 20 or newer&lt;/li&gt;
+                    &lt;li&gt;AEM Cloud Service release 2026.4 or newer&lt;/li&gt;
+                    &lt;/ul&gt;"/>
+        <title_4 sling:resourceType="core/franklin/components/title/v1/title" jcr:primaryType="nt:unstructured" title="Installation" titleType="h2"/>
+        <text_4 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured" text="&lt;pre&gt;&lt;code class&#x3D;&quot;language-sh&quot;&gt;npm i
+                    &lt;/code&gt;&lt;/pre&gt;"/>
+        <title_5 sling:resourceType="core/franklin/components/title/v1/title" jcr:primaryType="nt:unstructured" title="Linting" titleType="h2"/>
+        <text_5 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured" text="&lt;pre&gt;&lt;code class&#x3D;&quot;language-sh&quot;&gt;npm run lint
+                    &lt;/code&gt;&lt;/pre&gt;"/>
+      </section>
+    </root>
+  </jcr:content>
+</jcr:root>

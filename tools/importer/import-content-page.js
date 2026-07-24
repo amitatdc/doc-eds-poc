@@ -45,6 +45,52 @@ const transformers = [
   docCleanupTransformer,
 ];
 
+// SAMPLE CUSTOM PAGE PROPERTIES - keyed by pathname
+// Mirrors the custom fields added to models/_page.json (page-metadata model).
+const SAMPLE_PAGE_PROPERTIES = {
+  '/get-involved/apply-for-permits/how-we-regulate/': {
+    'Page Owner': 'Jane Doe',
+    'Internal Department': 'Permissions',
+    'Review Date': '2027-07-24',
+    Confidentiality: 'Public',
+  },
+  '/our-work/save-our-iconic-kiwi/': {
+    'Page Owner': 'Tim Raemaekers',
+    'Internal Department': 'Threatened Species',
+    'Review Date': '2027-07-24',
+    Confidentiality: 'Public',
+  },
+};
+
+/**
+ * Append custom page-property rows to the Metadata block produced by
+ * WebImporter.rules.createMetadata. That block is a <table> whose first row is
+ * a <th>Metadata</th> header and whose data rows are <tr><td>label</td><td>value</td></tr>.
+ * We locate it as the last <table> in main whose header cell reads "Metadata".
+ */
+function appendCustomMetadata(main, document, originalURL) {
+  const { pathname } = new URL(originalURL);
+  const props = SAMPLE_PAGE_PROPERTIES[pathname];
+  if (!props) return;
+
+  const tables = [...main.querySelectorAll('table')];
+  const metaTable = tables.reverse().find((t) => {
+    const th = t.querySelector('th');
+    return th && th.textContent.trim().toLowerCase() === 'metadata';
+  });
+  if (!metaTable) return;
+
+  Object.entries(props).forEach(([label, value]) => {
+    const row = document.createElement('tr');
+    const keyCell = document.createElement('td');
+    keyCell.textContent = label;
+    const valCell = document.createElement('td');
+    valCell.textContent = value;
+    row.append(keyCell, valCell);
+    metaTable.append(row);
+  });
+}
+
 /**
  * Execute all page transformers for a specific hook
  */
@@ -132,6 +178,7 @@ export default {
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
+    appendCustomMetadata(main, document, params.originalURL);
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
