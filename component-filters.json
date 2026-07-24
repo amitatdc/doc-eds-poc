@@ -19,6 +19,12 @@
     ]
   },
   {
+    "id": "cards-related",
+    "components": [
+      "card"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

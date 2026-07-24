@@ -1,0 +1,41 @@
+{
+  "variantName": "hero-banner",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-07-24T01:42:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/",
+    "originPage": "Save Our Iconic Kiwi content page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "background image + heading",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "content article pages",
+      "standard pages with a title over a banner image",
+      "campaign/programme landing pages"
+    ],
+    "notSuitableFor": [
+      "hero sections requiring a call-to-action button beyond a title",
+      "pages without a banner image"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/our-work/save-our-iconic-kiwi/index",
+      "/our-work/takahe-recovery-programme/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-07-24T01:48:00.000Z"
+  }
+}

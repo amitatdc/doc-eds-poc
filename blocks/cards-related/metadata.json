@@ -1,0 +1,41 @@
+{
+  "variantName": "cards-related",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-24T01:42:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/",
+    "originPage": "Save Our Iconic Kiwi content page",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "related-links",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image + linked title + description per card",
+    "buttonCount": 0,
+    "imageCount": 2
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "related content link grids in the footer region",
+      "navigational card grids (image + title + description)",
+      "content article and landing pages"
+    ],
+    "notSuitableFor": [
+      "cards without images",
+      "single feature highlight (use default content or columns)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/our-work/save-our-iconic-kiwi/index",
+      "/our-work/takahe-recovery-programme/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-07-24T01:48:00.000Z"
+  }
+}
