@@ -44,5 +44,11 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "form",
+    "components": [
+      "form-field"
+    ]
   }
 ]

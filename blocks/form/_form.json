@@ -1,0 +1,116 @@
+{
+  "definitions": [
+    {
+      "title": "Form",
+      "id": "form",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Form",
+              "model": "form",
+              "filter": "form"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Field",
+      "id": "form-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Form Field",
+              "model": "form-field"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "form",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "action",
+          "label": "Submit Endpoint (URL)",
+          "description": "URL the form is submitted to via POST. Leave empty to run in demo mode.",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "submitLabel",
+          "label": "Submit Button Label",
+          "value": "Submit"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "successMessage",
+          "label": "Success Message",
+          "value": "Thank you. Your submission has been received."
+        }
+      ]
+    },
+    {
+      "id": "form-field",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "fieldKind",
+          "label": "Field Type",
+          "value": "text",
+          "options": [
+            { "name": "Text", "value": "text" },
+            { "name": "Email", "value": "email" },
+            { "name": "Telephone", "value": "tel" },
+            { "name": "Number", "value": "number" },
+            { "name": "Text Area", "value": "textarea" },
+            { "name": "Select (dropdown)", "value": "select" },
+            { "name": "Checkbox", "value": "checkbox" },
+            { "name": "Date", "value": "date" }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "label",
+          "label": "Label",
+          "description": "Shown above the field. The submission name and placeholder are derived from this.",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "options",
+          "label": "Options",
+          "description": "Comma-separated list of options (only used for Select fields).",
+          "value": ""
+        },
+        {
+          "component": "boolean",
+          "valueType": "boolean",
+          "name": "required",
+          "label": "Required"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "form",
+      "components": [
+        "form-field"
+      ]
+    }
+  ]
+}
