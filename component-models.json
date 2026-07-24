@@ -166,7 +166,7 @@
     ]
   },
   {
-    "id": "card",
+    "id": "cards-related-item",
     "fields": [
       {
         "component": "reference",

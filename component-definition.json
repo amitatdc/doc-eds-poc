@@ -98,15 +98,15 @@
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "Card (Related)",
+          "id": "cards-related-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "name": "Card (Related)",
+                  "model": "cards-related-item"
                 }
               }
             }
