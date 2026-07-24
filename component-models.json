@@ -47,7 +47,7 @@
       {
         "component": "boolean",
         "valueType": "boolean",
-        "name": "hide-from-search",
+        "name": "hideFromSearch",
         "label": "Hide from search engines"
       },
       {
