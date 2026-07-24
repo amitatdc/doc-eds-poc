@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "https://www.doc.govt.nz/get-involved/apply-for-permits/how-we-regulate/",
+  "path": "get-involved/apply-for-permits/how-we-regulate",
+  "timestamp": "2026-07-24T02:02:25.301Z",
+  "title": "How we regulate: Permissions",
+  "template": "content-page",
+  "blocks": [
+    "hero-banner",
+    "cards-related"
+  ]
+}

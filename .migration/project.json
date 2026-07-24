@@ -1,0 +1,14 @@
+{
+  "type": "xwalk",
+  "sites": {
+    "doc-eds-poc": {
+      "previewOrg": "amitatdc",
+      "previewSite": "doc-eds-poc",
+      "aemSitePath": "/content/doc-eds-poc",
+      "aemAssetsFolderPath": "/content/dam/doc-eds-poc",
+      "aemSiteName": "doc-eds-poc",
+      "aemSiteTitle": "doc-eds-poc",
+      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json"
+    }
+  }
+}

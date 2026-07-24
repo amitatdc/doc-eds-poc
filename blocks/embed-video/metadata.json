@@ -1,0 +1,38 @@
+{
+  "variantName": "embed-video",
+  "baseBlock": "embed",
+  "version": "1.0.0",
+  "created": "2026-07-24T01:42:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/",
+    "originPage": "Save Our Iconic Kiwi content page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "video-embed",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "video URL with optional poster image",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "embedded YouTube/Vimeo videos within article content",
+      "video trailers inside long-form prose",
+      "content pages featuring external media"
+    ],
+    "notSuitableFor": [
+      "self-hosted stand-alone video files (use the video block)",
+      "purely text or image content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/our-work/save-our-iconic-kiwi/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-24T01:42:00.000Z"
+  }
+}

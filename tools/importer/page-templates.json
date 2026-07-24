@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "content-page",
+      "urls": [
+        "https://www.doc.govt.nz/get-involved/apply-for-permits/how-we-regulate/",
+        "https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/"
+      ],
+      "representativeUrl": "https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/",
+      "coverageGaps": [],
+      "description": "Standard content article page: hero banner with title, intro overview, and a long-form prose content box (headings, paragraphs, lists, embedded video). May include a related-links cards grid in the footer region.",
+      "blocks": [
+        {
+          "name": "hero-banner",
+          "instances": [
+            "section.doc-main-layout__hero .hero",
+            "section.doc-main-layout__hero"
+          ]
+        },
+        {
+          "name": "embed-video",
+          "instances": [
+            "#doc-content-box iframe[src*=\"youtube.com/embed\"]",
+            "#doc-content-box p.fullwidthimagecentre:has(iframe)"
+          ]
+        },
+        {
+          "name": "cards-related",
+          "instances": [
+            "#footer-related",
+            "footer section.w-full.bg-white .doc-main-layout__related__content"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "programme-landing",
+      "urls": [
+        "https://www.doc.govt.nz/our-work/takahe-recovery-programme/"
+      ],
+      "representativeUrl": "https://www.doc.govt.nz/our-work/takahe-recovery-programme/",
+      "coverageGaps": [],
+      "description": "Programme hub/landing page: hero banner with title, intro overview with call-to-action button, a grid of navigational link cards, and a partners/supporters sidebar section.",
+      "blocks": [
+        {
+          "name": "hero-banner",
+          "instances": [
+            "section.doc-main-layout__hero .hero",
+            "section.doc-main-layout__hero"
+          ]
+        },
+        {
+          "name": "cards-related",
+          "instances": [
+            "#doc-content-box .products-container",
+            "#doc-content-box .product-card"
+          ]
+        }
+      ]
+    }
+  ]
+}
