@@ -9,7 +9,9 @@
             "resourceType": "fd/franklin/components/form/v1/form",
             "template": {
               "fieldType": "form",
-              "fd:version": "2.1"
+              "fd:version": "2.1",
+              "model": "form",
+              "filter": "form"
             }
           }
         }
@@ -35,6 +37,9 @@
     },
     { 
       "...": "./components/wizard/_wizard.json#/definitions" 
+    },
+    { 
+      "...": "./components/range/_range.json#/definitions" 
     }
   ],
   "models": [

@@ -189,9 +189,12 @@ function annotateItems(items, formDefinition, formFieldMap) {
 
 export function annotateFormForEditing(formEl, formDefinition) {
   if (document.documentElement.classList.contains('adobe-ue-edit')) {
-    const block = formEl.closest('.block[data-aue-resource]');
+    const block = getFormBlock(formEl);
     if (block) {
       block.setAttribute('data-aue-filter', 'form');
+      if (!block.dataset.aueModel) {
+        block.setAttribute('data-aue-model', 'form');
+      }
     }
     formEl.classList.add('edit-mode');
   }
@@ -233,29 +236,67 @@ export function handleEditorSelect(event) {
   }
 }
 
-export async function renderFormBlock(form, editMode) {
-  const block = form.closest('.block[data-aue-resource]');
-  if ((editMode && !block.classList.contains('edit-mode')) || !editMode) {
-    block.classList.toggle('edit-mode', editMode);
-    const div = form.parentElement;
-    let formDef;
+function getFormBlock(form) {
+  return form?.closest?.('.block[data-aue-resource]')
+    || form?.closest?.('.form.block')
+    || form?.closest?.('[data-aue-resource][data-aue-filter="form"]')
+    || form?.closest?.('[data-aue-resource][data-aue-model="form"]');
+}
+
+function isAdaptiveFormBlock(block) {
+  if (!block) return false;
+  return block.dataset?.aueModel === 'form'
+    || block.getAttribute('data-aue-filter') === 'form'
+    || block.classList.contains('form');
+}
+
+async function resolveFormDefinition(form, block) {
+  if (form?.afFormDef) return form.afFormDef;
+
+  if (form?.dataset?.formpath) {
     try {
       const formDefResp = await fetch(`${form.dataset.formpath}.model.json`);
-      formDef = await formDefResp.json();
+      if (formDefResp.ok) {
+        return formDefResp.json();
+      }
+      // eslint-disable-next-line no-console
+      console.warn('Form model.json response not OK:', formDefResp.status, form.dataset.formpath);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn('Failed to fetch form model json:', error);
-      try {
-        formDef = await fetchForm(document.location.pathname);
-      } catch (fallbackError) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to fetch fallback form definition:', fallbackError);
-        return null;
-      }
     }
+  }
+
+  try {
+    return await fetchForm(document.location.pathname);
+  } catch (fallbackError) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to fetch fallback form definition:', fallbackError);
+  }
+
+  // Last resort: annotate the already-rendered form without re-decorating
+  return form?.afFormDef || null;
+}
+
+export async function renderFormBlock(form, editMode) {
+  const block = getFormBlock(form);
+  if (!block) {
+    // eslint-disable-next-line no-console
+    console.warn('Adaptive Form block not found for authoring instrumentation');
+    return null;
+  }
+  if ((editMode && !block.classList.contains('edit-mode')) || !editMode) {
+    block.classList.toggle('edit-mode', editMode);
+    const div = form.parentElement;
+    const formDef = await resolveFormDefinition(form, block);
 
     if (!formDef) {
       return null;
+    }
+
+    // If already in edit-mode render, annotate in place without destroying the form
+    if (editMode && form.classList.contains('edit-mode') && form.querySelector('.field-wrapper')) {
+      return { formEl: form, formDef };
     }
 
     div.replaceChildren();
@@ -273,9 +314,21 @@ export async function renderFormBlock(form, editMode) {
   return null;
 }
 
+function isUeEditMode() {
+  return document.documentElement.classList.contains('adobe-ue-edit')
+    || window.currentMode === 'edit';
+}
+
 async function annotateFormsForEditing(forms) {
-  if (typeof window.currentMode !== 'undefined' && window.currentMode === 'preview') return;
+  // Forms bootstrap currentMode as 'preview'; also accept UE edit class to avoid race
+  if (!isUeEditMode()) return;
+  window.currentMode = 'edit';
   forms.forEach(async (form) => {
+    // Fast path: annotate current DOM when definition is already on the form
+    if (form.afFormDef && form.querySelector('.field-wrapper')) {
+      annotateFormForEditing(form, form.afFormDef);
+      return;
+    }
     const { formEl, formDef } = (await renderFormBlock(form, true)) || {};
     if (formEl && formDef) {
       annotateFormForEditing(formEl, formDef);
@@ -331,31 +384,37 @@ export async function applyChanges(event) {
   let element = document.querySelector(`[data-aue-resource="${resource}"]`);
 
   if (element) {
-    const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
-    if (block) {
+    const block = element.parentElement?.closest('.block[data-aue-resource]')
+      || element?.closest('.block[data-aue-resource]')
+      || getFormBlock(element);
+    if (block && isAdaptiveFormBlock(block)) {
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
-      if (block.dataset.aueModel === 'form') {
-        const newContainer = newBlock.querySelector('pre');
-        const codeEl = newContainer?.querySelector('code');
-        const jsonContent = codeEl?.textContent;
-        if (jsonContent) {
-          const formDef = decode(jsonContent);
-          if (element.classList.contains('panel-wrapper')) {
-            element = element.parentNode;
-          }
-          const parent = element.closest('.panel-wrapper') || element.closest('form') || element.querySelector('form');
-          const parentDef = getFieldById(formDef, parent.dataset.id, {});
-          parent.replaceChildren();
-          if (parent.hasAttribute('data-component-status')) {
-            parent.removeAttribute('data-component-status');
-          }
-          await generateFormRendition(parentDef, parent, formDef?.id, getItems);
-          annotateItems(getContainerChildNodes(parent, parentDef), formDef, {});
-          return true;
+      const newContainer = newBlock?.querySelector('pre');
+      const codeEl = newContainer?.querySelector('code');
+      const jsonContent = codeEl?.textContent;
+      if (jsonContent) {
+        const formDef = decode(jsonContent);
+        if (element.classList.contains('panel-wrapper')) {
+          element = element.parentNode;
         }
-        return false;
+        const parent = element.closest('.panel-wrapper') || element.closest('form') || element.querySelector('form');
+        const parentDef = getFieldById(formDef, parent.dataset.id, {});
+        parent.replaceChildren();
+        if (parent.hasAttribute('data-component-status')) {
+          parent.removeAttribute('data-component-status');
+        }
+        await generateFormRendition(parentDef, parent, formDef?.id, getItems);
+        const formEl = parent.closest('form') || block.querySelector('form');
+        if (formEl) {
+          formEl.afFormDef = formDef;
+          annotateFormForEditing(formEl, formDef);
+        } else {
+          annotateItems(getContainerChildNodes(parent, parentDef), formDef, {});
+        }
+        return true;
       }
+      return false;
     }
   }
   return true;
@@ -394,6 +453,15 @@ export function attachEventListners(main) {
     ueEditModeHandler();
   }
   document.body.addEventListener('aue:ui-edit', ueEditModeHandler);
+
+  // UE sometimes adds adobe-ue-edit without emitting aue:ui-edit; watch for that
+  const ueClassObserver = new MutationObserver(() => {
+    if (document.documentElement.classList.contains('adobe-ue-edit')
+      && window.currentMode !== 'edit') {
+      ueEditModeHandler();
+    }
+  });
+  ueClassObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 }
 
 const observer = new MutationObserver(instrumentForms);

@@ -553,6 +553,9 @@ async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
     }
   }
 
+  // Keep definition for Universal Editor instrumentation (field selection)
+  form.afFormDef = def;
+
   form.dataset.redirectUrl = def.redirectUrl || '';
   form.dataset.thankYouMsg = def.thankYouMsg || '';
   form.dataset.action = def.action || pathname?.split('.json')[0];

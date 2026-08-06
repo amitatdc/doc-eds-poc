@@ -196,7 +196,9 @@
                 "resourceType": "fd/franklin/components/form/v1/form",
                 "template": {
                   "fieldType": "form",
-                  "fd:version": "2.1"
+                  "fd:version": "2.1",
+                  "model": "form",
+                  "filter": "form"
                 }
               }
             }
@@ -671,6 +673,24 @@
                     "fieldType": "panel",
                     "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer"
                   }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Range",
+          "id": "range",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/numberinput/v1/numberinput",
+                "template": {
+                  "jcr:title": "Range",
+                  "fieldType": "number-input",
+                  "fd:viewType": "range",
+                  "enabled": true,
+                  "visible": true
                 }
               }
             }

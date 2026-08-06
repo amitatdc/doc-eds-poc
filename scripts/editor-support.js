@@ -50,7 +50,10 @@ async function applyChanges(event) {
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
-      if (block.dataset.aueModel === 'form') {
+      // Adaptive Form instrumentation is handled by form-editor-support.js
+      if (block.dataset.aueModel === 'form'
+        || block.getAttribute('data-aue-filter') === 'form'
+        || block.classList.contains('form')) {
         return true;
       } else if (newBlock) {
         newBlock.style.display = 'none';
