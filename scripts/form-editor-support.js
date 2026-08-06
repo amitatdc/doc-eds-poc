@@ -187,6 +187,20 @@ function annotateItems(items, formDefinition, formFieldMap) {
   }
 }
 
+function getFormBlock(form) {
+  return form?.closest?.('.block[data-aue-resource]')
+    || form?.closest?.('.form.block')
+    || form?.closest?.('[data-aue-resource][data-aue-filter="form"]')
+    || form?.closest?.('[data-aue-resource][data-aue-model="form"]');
+}
+
+function isAdaptiveFormBlock(block) {
+  if (!block) return false;
+  return block.dataset?.aueModel === 'form'
+    || block.getAttribute('data-aue-filter') === 'form'
+    || block.classList.contains('form');
+}
+
 export function annotateFormForEditing(formEl, formDefinition) {
   if (document.documentElement.classList.contains('adobe-ue-edit')) {
     const block = getFormBlock(formEl);
@@ -236,21 +250,7 @@ export function handleEditorSelect(event) {
   }
 }
 
-function getFormBlock(form) {
-  return form?.closest?.('.block[data-aue-resource]')
-    || form?.closest?.('.form.block')
-    || form?.closest?.('[data-aue-resource][data-aue-filter="form"]')
-    || form?.closest?.('[data-aue-resource][data-aue-model="form"]');
-}
-
-function isAdaptiveFormBlock(block) {
-  if (!block) return false;
-  return block.dataset?.aueModel === 'form'
-    || block.getAttribute('data-aue-filter') === 'form'
-    || block.classList.contains('form');
-}
-
-async function resolveFormDefinition(form, block) {
+async function resolveFormDefinition(form) {
   if (form?.afFormDef) return form.afFormDef;
 
   if (form?.dataset?.formpath) {
@@ -288,7 +288,7 @@ export async function renderFormBlock(form, editMode) {
   if ((editMode && !block.classList.contains('edit-mode')) || !editMode) {
     block.classList.toggle('edit-mode', editMode);
     const div = form.parentElement;
-    const formDef = await resolveFormDefinition(form, block);
+    const formDef = await resolveFormDefinition(form);
 
     if (!formDef) {
       return null;
