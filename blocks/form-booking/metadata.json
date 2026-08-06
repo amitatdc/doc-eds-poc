@@ -1,0 +1,58 @@
+{
+  "variantName": "form-booking",
+  "baseBlock": "form",
+  "version": "1.0.0",
+  "created": "2026-08-06T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/central-north-island/places/tongariro-national-park/things-to-do/tracks/tongariro-alpine-crossing-bookings/booking-form/",
+    "originPage": "Tongariro Alpine Crossing booking form page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "booking-form",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "definition-driven form: headings + radio choice groups (some conditional) + number/date/text/tel/email inputs + statistical questions + submit button",
+    "buttonCount": 1,
+    "imageCount": 0,
+    "fieldGroups": [
+      "trip purpose (radio, 4 options)",
+      "own vehicle (radio Yes/No, conditional plate-number + other)",
+      "activity duration (radio, 2 options)",
+      "group size (number, mandatory)",
+      "travel date (date, mandatory)",
+      "rebooking (radio Yes/No, conditional cancelled-trip date)",
+      "group leader contact (text/tel/email)",
+      "statistical questions (residency, hike experience, transport, optional survey opt-in)",
+      "submit ('Finish your booking')"
+    ]
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "booking / enquiry / registration pages",
+      "multi-question data-collection forms driven by a form definition source",
+      "pages needing radio groups, number/date/text/email fields and a submit endpoint"
+    ],
+    "notSuitableFor": [
+      "static content that an author can simply type",
+      "pages with a single inline search input (use the search block)",
+      "content-only pages without data collection"
+    ]
+  },
+  "authoringModel": {
+    "block": "Form",
+    "rows": "2-row single-column table: row 1 = block name; row 2 = link to the form definition source (spreadsheet/JSON of fields) plus the submit/action URL",
+    "dependencies": ["form-booking.js", "form-fields.js"],
+    "note": "Renders fields from a form definition source via form-fields.js (text, number, date, email, tel, radio, checkbox, select, fieldset, plaintext/heading, submit). New variant of the canonical AEM Edge Delivery form block; the forms-excat plugin/skill was not available so it was created via the standard block-variant workflow."
+  },
+  "usage": {
+    "pagesUsing": [
+      "/parks-and-recreation/places-to-go/central-north-island/places/tongariro-national-park/things-to-do/tracks/tongariro-alpine-crossing-bookings/booking-form/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-06T00:00:00.000Z"
+  }
+}

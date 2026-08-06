@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "url": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/central-north-island/places/tongariro-national-park/things-to-do/tracks/tongariro-alpine-crossing-bookings/booking-form/",
+  "path": "parks-and-recreation/places-to-go/central-north-island/places/tongariro-national-park/things-to-do/tracks/tongariro-alpine-crossing-bookings/booking-form",
+  "timestamp": "2026-08-06T00:29:18.688Z",
+  "title": "Tongariro Alpine Crossing booking form",
+  "template": "booking-form",
+  "blocks": [
+    "hero-banner",
+    "form-booking",
+    "cards-related"
+  ]
+}

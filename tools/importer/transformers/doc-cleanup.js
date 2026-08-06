@@ -5,8 +5,8 @@
  * Transformer: doc.govt.nz (Department of Conservation NZ) site-wide cleanup.
  *
  * Removes non-authorable site chrome so the import contains only page-level
- * authorable content. Robust for both the `content-page` and
- * `programme-landing` templates (same site shell).
+ * authorable content. Robust for the `content-page`, `programme-landing`, and
+ * `booking-form` templates (same site shell).
  *
  * All selectors below were verified against migration-work/cleaned.html.
  *
@@ -22,6 +22,17 @@
  *    or the embed-video parser (which runs between hooks) would have nothing to
  *    extract. Widget iframes (reCAPTCHA, empty trailing iframe) are removed by
  *    their specific containers/attributes instead.
+ *  - booking-form template: #doc-content-box contains an authorable EPiServer
+ *    form (div.block.formcontainerblockwithcustomdefaultvalues >
+ *    form.EPiServerForms, cleaned.html line ~491). We KEEP the form and all of
+ *    its authorable definition (h2.Form__Title, legends/labels
+ *    .Form__Element__Caption, radio/text/date field inputs, .FormParagraphText
+ *    helper notes, and button.FormSubmitButton) so the form-booking parser can
+ *    recover field semantics. We ONLY strip EPiServer plumbing that is not
+ *    authorable content (see the beforeTransform block below). The same
+ *    EPiServer form markup also backs the site-wide feedback widget inside
+ *    #footer-feedback-container (cleaned.html line ~893), which is removed
+ *    wholesale in afterTransform.
  */
 
 const TransformHook = {
@@ -43,6 +54,46 @@ export default function transform(hookName, element, payload) {
       'iframe[src*="google.com/recaptcha"]',
       'textarea.g-recaptcha-response',
       '[id^="g-recaptcha-response"]',
+    ]);
+
+    // --- EPiServer form plumbing (non-authorable) ---
+    // The booking-form template keeps the authorable EPiServer form inside
+    // #doc-content-box (form.EPiServerForms) so the form-booking parser can
+    // recover field semantics. We strip ONLY the non-authorable plumbing here,
+    // in beforeTransform, so the parser (which runs between the hooks) sees a
+    // clean form and never pulls this chrome into the extracted field
+    // definition. Everything authorable — h2.Form__Title, fieldset/legend and
+    // label .Form__Element__Caption, the radio/text/number/date field inputs
+    // (.FormChoice__Input / .FormTextbox__Input / .FormDateTime__Input),
+    // .FormParagraphText helper notes, and button.FormSubmitButton — is left
+    // untouched. All class names below were verified in cleaned.html.
+    //
+    // NOTE: The site-wide feedback widget (#footer-feedback-container) is ALSO
+    // an EPiServer form and is removed wholesale in afterTransform; these same
+    // selectors additionally clean its plumbing early, which is harmless.
+    WebImporter.DOMUtils.remove(element, [
+      // System hidden inputs: form GUID / channel / partial-view plumbing.
+      //   cleaned.html booking form lines ~493-497 (Form__SystemElement),
+      //   feedback form lines ~894-898 / ~927 / ~932.
+      'input.FormHidden',
+      // Bare, attribute-stripped token/anti-forgery inputs the scraper left
+      //   classless (cleaned.html lines ~498 and ~899). Real form fields all
+      //   carry Form* classes, so this cannot match an authorable field.
+      'form.EPiServerForms input:not([class])',
+      // Empty submit-result status region (cleaned.html lines ~500-503).
+      '.Form__Status',
+      // Empty per-field ARIA validation-error placeholders (many, e.g. line
+      //   ~519); they carry no field semantics.
+      'span.Form__Element__ValidationError',
+      // reCAPTCHA field block inside an EPiServer form (feedback widget:
+      //   .recaptchaelementblock / .FormRecaptcha, cleaned.html ~916). Not part
+      //   of the authorable form definition. (The booking form has none.)
+      '.recaptchaelementblock',
+      '.FormRecaptcha',
+      // Hidden page-name / page-url system field blocks (feedback widget,
+      //   cleaned.html ~925 / ~930).
+      '.hiddenpagenameelement',
+      '.hiddenpageurlelement',
     ]);
   }
 
