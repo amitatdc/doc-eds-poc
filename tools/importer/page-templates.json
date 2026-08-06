@@ -60,6 +60,38 @@
           ]
         }
       ]
+    },
+    {
+      "name": "booking-form",
+      "urls": [
+        "https://www.doc.govt.nz/parks-and-recreation/places-to-go/central-north-island/places/tongariro-national-park/things-to-do/tracks/tongariro-alpine-crossing-bookings/booking-form/"
+      ],
+      "representativeUrl": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/central-north-island/places/tongariro-national-park/things-to-do/tracks/tongariro-alpine-crossing-bookings/booking-form/",
+      "coverageGaps": [],
+      "description": "Booking/enquiry form page: hero banner with title, intro overview, and a long-form form (radio-button choice groups, text inputs, number and date fields, statistical questions, and a submit button) rendered inside the content box. May include a related-links cards grid in the footer region.",
+      "blocks": [
+        {
+          "name": "hero-banner",
+          "instances": [
+            "section.doc-main-layout__hero .hero",
+            "section.doc-main-layout__hero"
+          ]
+        },
+        {
+          "name": "form-booking",
+          "instances": [
+            "#doc-content-box .block.formcontainerblockwithcustomdefaultvalues",
+            "#doc-content-box form.EPiServerForms"
+          ]
+        },
+        {
+          "name": "cards-related",
+          "instances": [
+            "#footer-related",
+            "footer section.w-full.bg-white .doc-main-layout__related__content"
+          ]
+        }
+      ]
     }
   ]
 }
