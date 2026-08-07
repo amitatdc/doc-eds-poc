@@ -1,0 +1,116 @@
+{
+  "definitions": [
+    {
+      "title": "Form",
+      "id": "form",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Form",
+              "filter": "form"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Field",
+      "id": "form-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Form Field",
+              "model": "form-field"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "form-field",
+      "fields": [
+        {
+          "component": "select",
+          "name": "type",
+          "label": "Field type",
+          "value": "text",
+          "options": [
+            { "name": "Single-line text", "value": "text" },
+            { "name": "Email", "value": "email" },
+            { "name": "Phone", "value": "tel" },
+            { "name": "Number", "value": "number" },
+            { "name": "Date", "value": "date" },
+            { "name": "Multi-line text", "value": "textarea" },
+            { "name": "Radio buttons (choose one)", "value": "radio" },
+            { "name": "Checkboxes (choose many)", "value": "checkbox" },
+            { "name": "Dropdown", "value": "select" },
+            { "name": "Heading", "value": "heading" },
+            { "name": "Paragraph text", "value": "paragraph" },
+            { "name": "Submit button", "value": "submit" }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Label / question",
+          "description": "The question or label the visitor sees. For Heading and Paragraph, this is the text shown.",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Field name",
+          "description": "Optional. The key used when the form is submitted (e.g. groupSize). Auto-generated from the label if left blank. Give all options of one radio/checkbox group the SAME field name.",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "placeholder",
+          "label": "Placeholder",
+          "description": "Optional hint text shown inside empty text/number/date fields.",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "options",
+          "label": "Options",
+          "description": "For Radio / Checkbox / Dropdown only. List the choices separated by a pipe |  e.g.  Yes|No|Maybe . To store a different submitted value, use Label=value  e.g.  New Zealand=nz|Overseas=intl",
+          "valueType": "string"
+        },
+        {
+          "component": "boolean",
+          "name": "required",
+          "label": "Required",
+          "description": "Visitor must complete this field before submitting."
+        },
+        {
+          "component": "text",
+          "name": "action",
+          "label": "Action URL (Submit button only)",
+          "description": "Only used on the Submit button. The endpoint the form POSTs to when submitted.",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "confirmation",
+          "label": "Confirmation page (Submit button only)",
+          "description": "Optional. Page to redirect to after a successful submission."
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "form",
+      "components": [
+        "form-field"
+      ]
+    }
+  ]
+}
