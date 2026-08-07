@@ -173,6 +173,30 @@ var CustomImportScript = (() => {
         "textarea.g-recaptcha-response",
         '[id^="g-recaptcha-response"]'
       ]);
+      WebImporter.DOMUtils.remove(element, [
+        // System hidden inputs: form GUID / channel / partial-view plumbing.
+        //   cleaned.html booking form lines ~493-497 (Form__SystemElement),
+        //   feedback form lines ~894-898 / ~927 / ~932.
+        "input.FormHidden",
+        // Bare, attribute-stripped token/anti-forgery inputs the scraper left
+        //   classless (cleaned.html lines ~498 and ~899). Real form fields all
+        //   carry Form* classes, so this cannot match an authorable field.
+        "form.EPiServerForms input:not([class])",
+        // Empty submit-result status region (cleaned.html lines ~500-503).
+        ".Form__Status",
+        // Empty per-field ARIA validation-error placeholders (many, e.g. line
+        //   ~519); they carry no field semantics.
+        "span.Form__Element__ValidationError",
+        // reCAPTCHA field block inside an EPiServer form (feedback widget:
+        //   .recaptchaelementblock / .FormRecaptcha, cleaned.html ~916). Not part
+        //   of the authorable form definition. (The booking form has none.)
+        ".recaptchaelementblock",
+        ".FormRecaptcha",
+        // Hidden page-name / page-url system field blocks (feedback widget,
+        //   cleaned.html ~925 / ~930).
+        ".hiddenpagenameelement",
+        ".hiddenpageurlelement"
+      ]);
     }
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, [
@@ -214,7 +238,8 @@ var CustomImportScript = (() => {
     description: "Standard content article page: hero banner with title, intro overview, and a long-form prose content box (headings, paragraphs, lists, embedded video). May include a related-links cards grid in the footer region.",
     urls: [
       "https://www.doc.govt.nz/get-involved/apply-for-permits/how-we-regulate/",
-      "https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/"
+      "https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/",
+      "https://www.doc.govt.nz/nature/native-plants/"
     ],
     blocks: [
       {
@@ -243,6 +268,12 @@ var CustomImportScript = (() => {
     },
     "/our-work/save-our-iconic-kiwi/": {
       "Page Owner": "Tim Raemaekers",
+      "Internal Department": "Threatened Species",
+      "Review Date": "2027-07-24",
+      Confidentiality: "Public"
+    },
+    "/nature/native-plants/": {
+      "Page Owner": "Jane Doe",
       "Internal Department": "Threatened Species",
       "Review Date": "2027-07-24",
       Confidentiality: "Public"

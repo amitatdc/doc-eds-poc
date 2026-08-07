@@ -23,6 +23,7 @@ const PAGE_TEMPLATE = {
   urls: [
     'https://www.doc.govt.nz/get-involved/apply-for-permits/how-we-regulate/',
     'https://www.doc.govt.nz/our-work/save-our-iconic-kiwi/',
+    'https://www.doc.govt.nz/nature/native-plants/',
   ],
   blocks: [
     {
@@ -56,6 +57,12 @@ const SAMPLE_PAGE_PROPERTIES = {
   },
   '/our-work/save-our-iconic-kiwi/': {
     'Page Owner': 'Tim Raemaekers',
+    'Internal Department': 'Threatened Species',
+    'Review Date': '2027-07-24',
+    Confidentiality: 'Public',
+  },
+  '/nature/native-plants/': {
+    'Page Owner': 'Jane Doe',
     'Internal Department': 'Threatened Species',
     'Review Date': '2027-07-24',
     Confidentiality: 'Public',

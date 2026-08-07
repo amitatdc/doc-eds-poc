@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "https://www.doc.govt.nz/nature/native-plants/",
+  "path": "nature/native-plants",
+  "timestamp": "2026-08-07T11:35:42.758Z",
+  "title": "New Zealand native plants: Conservation",
+  "template": "content-page",
+  "blocks": [
+    "hero-banner",
+    "cards-related"
+  ]
+}
